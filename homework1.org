@@ -1,0 +1,75 @@
+Homework!!!!
+
+This homework is equivalent to a programming assignment. It is worth 100 points. Please work on it alone. NEATNESS and READABILITY count; actually for 40% of your grade.
+
+You will need to watch the PIC training video linked to off of the class web page. Specifically, you will need to view video 2: PICmicro x14 Instruction Set. You will also need to refer to the technical reference manual for the chip.
+
+
+1) According to the video, how many instructions are there for the x14 chip ?
+	 The pic x14 chips have 35 instructions
+
+2) How many bits are there for the opcode for
+    a) byte oriented instructions
+	     6 - bit opcodes
+    b) bit oriented instructions
+	     4 - bit opcodes
+    c) for the CALL and GOTO instructions
+	     6 - bit opcodes
+
+TODO:
+3) How does the chip decode the opcode for a given instruction ? That is, given an instruction, how does the chip figure out if it is a byte oriented, bit oriented, literal or goto/call instruction ? You'll need to refer to the technical reference manual.
+	 All byte oriented commands start with 00.
+	 All bit oriended commands start with 01.
+	 The control commands mix it up a bit. Most of them start with 11.
+	 The CALL and GOTO instructions start with a 10.
+	 CLRWDT, RETFIE, RETURN, and SLEEP all have there 7 most significant bits
+	   zeroed out 00 0000 0xxx xxxx
+	   NOP seems to be related to these commands however CLRWDT, RET... and so on have 
+	   a value greater than zero in the four least significant bits where NOP has all zeros
+	 
+4) For byte oriented instructions, what's the difference between specifying a 'w' or 'f' after the operand?
+	 Specifing w tell the instruction to store the result back into the w reister and specifing f tells the command to
+	 put the result in the file
+
+TODO: check to see if this is correct and that it doesnt throw an error 
+5) What happens if you don't specify a 'w' or 'f' after the operand in a byte oriented instruction ?
+	 The result is stored in the w register
+
+TODO: look up indirect addressing
+6) The 2K range for goto/call instructions is too restrictive. I wish to design to a chip using the x14 instruction set and architecture that can handle bigger programs (for example, up to 8K). Is this possible ? Explain your answer.
+	 No this is not possible because in order to jump more than 2k you would need more than 8 bits for addressing.
+	 Since the GOTO and CALL instructions have a 6 bit opcode and the x14 architecture has 14 bit instructions 14 - 6 = 8
+	 therefore you may only jump within a 2k (8 bit) range. 
+
+TODO: figure out the flags and where they are located - check the first video i think
+7) What flags exist in the 16F628 ? Where are they located ?
+
+TODO: figure this out
+8) What is the DC flag used for? Please don't quote the reference manual (0 points); given me a practical application (this will take some thought or research).
+	 The digit carry flag is set when the lower nibble overflows
+
+9) What is the difference between RETURN and RETLW ?
+	 RETURN just returns where as RETLW does the same thing that return does but it also stores an immidiate value its given into the w register
+
+TODO: do this code fragment maybe look at lecture 1 for examples on how to switch memory banks
+10) I have written three subroutines: doThis, doThat, doTheOther. I want to call doThis if PORTB pin 3 is set,  otherwise call doThat. I want to cal doTheOther in either case. Write the code fragment to accomplish this.
+
+TODO: watch the video... right now i belive that its an infanate loop detector
+11) What is a Watch Dog Timer ?
+    Its a device thats independent of the cpu that can detect operatins that take too long
+		or wake the cpu from sleep mode. 
+
+TODO: watch the video 
+12) What breed is the Watch Dog for the Watch Dog Timer ?
+		Pit bull? or single stage with independant clock.
+
+TODO: look at the PORT layout of A and B 
+13) PORTA and PORTB each have 8 pins. NOT all of these pins perform I/O . Which ones do not ? What are these pins functions ?
+
+TODO: figure out why we do this
+14) You have beem instructed to include the following lines in all your programs:
+
+    movlw    0x07
+    movwf    CMCON            ;turn comparators off (make it like a 16F84)
+   
+Why should you include these lines ? What is a comparator ?
