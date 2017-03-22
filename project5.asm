@@ -59,10 +59,10 @@ wiskers
 	movlw .2 ;how long the robot should rotate
 	movwf ROTATE
 
-  comf ROBOT,F ;move robot backwards
+	comf ROBOT,F ;move robot backwards
 
 	clrf TMR1L ;clear timer 1 low byte
-  clrf TMR1H ;clear timer 1 high byte
+	clrf TMR1H ;clear timer 1 high byte
 
 	bsf T1CON,TMR1ON ;enable timer 1
 	return
@@ -90,8 +90,8 @@ move_robot
 	bcf PORTB,RB3 ;turn off servo 0
 	bcf PORTB,RB4 ;turn off servo 1
 
-	movlw	d'99' ;set up timer 0 for 20 milli seconds
-	movwf	TMR0
+	movlw d'99' ;set up timer 0 for 20 milli seconds
+	movwf TMR0
 
 	bcf INTCON,T0IF ;clear timer 0 interrupt
 	return
@@ -143,17 +143,17 @@ more
 ;;; w is the current value stored in the w register when this sub is called
 ;;; note that 0 is = 256
 delay_w_ops
-  movwf count
+	movwf count
 delay_w_ops_loop
-  decfsz count
-  goto delay_w_ops_loop
-  return
+	decfsz count
+	goto delay_w_ops_loop
+	return
 ;-------------------------------------------------------------------------------
 ;;; delays for 1 milli second
 delay_1_milli
-  movlw 0x00
-  call delay_w_ops
-  movlw .75
-  call delay_w_ops
-  return
+	movlw 0x00
+	call delay_w_ops
+	movlw .75
+	call delay_w_ops
+	return
 	end
