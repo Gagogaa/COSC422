@@ -9,13 +9,13 @@
 	__config 0x3D18 ;sets the configuration settings (oscillator type etc.)
 ;-------------------------------------------------------------------------------
 	cblock	0X20
-	  count
+		count
 		ROBOT
 		POSTSCALE
 		ROTATE
 	endc
 ;-------------------------------------------------------------------------------
-	org	0x00
+	org 0x00
 	goto setup
 ;-------------------------------------------------------------------------------
 	org 0x04 ;interrupt vector
@@ -68,8 +68,8 @@ wiskers
 	return
 ;-------------------------------------------------------------------------------
 move_robot
-	bsf	PORTB,RB3 ;turn on servo 0
-	bsf	PORTB,RB4 ;turn on servo 1
+	bsf PORTB,RB3 ;turn on servo 0
+	bsf PORTB,RB4 ;turn on servo 1
 
 	call delay_1_milli
 
@@ -77,8 +77,8 @@ move_robot
 	movlw .100
 	call delay_w_ops
 
-  btfss ROBOT,b'00000000' ;check to see if servo 0 should be turned off
-	bcf	PORTB,RB3
+	btfss ROBOT,b'00000000' ;check to see if servo 0 should be turned off
+	bcf PORTB,RB3
 
 	btfss ROBOT,b'00000001' ;check to see if servo 1 should be turned off
 	bcf PORTB,RB4
@@ -87,33 +87,33 @@ move_robot
 	movlw .133
 	call delay_w_ops
 
-	bcf	PORTB,RB3 ;turn off servo 0
-	bcf	PORTB,RB4 ;turn off servo 1
+	bcf PORTB,RB3 ;turn off servo 0
+	bcf PORTB,RB4 ;turn off servo 1
 
 	movlw	d'99' ;set up timer 0 for 20 milli seconds
 	movwf	TMR0
 
-	bcf	INTCON,T0IF ;clear timer 0 interrupt
+	bcf INTCON,T0IF ;clear timer 0 interrupt
 	return
 ;-------------------------------------------------------------------------------
 setup
-	movlw	0x07
-	movwf	CMCON ;turn comparators off (make it like a 16F84)
+	movlw 0x07
+	movwf CMCON ;turn comparators off (make it like a 16F84)
 
 	clrwdt ;just making sure ;-)
 
-	bsf	STATUS,RP0 ;switch to bank 1
-	movlw	b'11010110' ;28-1 prescaler for timer 0
-	movwf	OPTION_REG
+	bsf STATUS,RP0 ;switch to bank 1
+	movlw b'11010110' ;28-1 prescaler for timer 0
+	movwf OPTION_REG
 
 	bsf PIE1,TMR1IE ;enable timer 1 interrupts
 
-	movlw	0x01
-	movwf	TRISB ; Port B is output, B0 is input
-	movlw	0xff
-	movwf	TRISA ; Port A is input
+	movlw 0x01
+	movwf TRISB ; Port B is output, B0 is input
+	movlw 0xff
+	movwf TRISA ; Port A is input
 
-	bcf	STATUS,RP0 ;switch back to bank 0
+	bcf STATUS,RP0 ;switch back to bank 0
 
 	;enable global interrupts
 	;enable peritherial interrupts
@@ -122,16 +122,16 @@ setup
 	movlw b'11110000'
 	movwf INTCON
 
-	bcf PIR1, TMR1IF ;clear timer 1 interrupt
+	bcf PIR1,TMR1IF ;clear timer 1 interrupt
 
 	movlw B'00110000' ;1-8 prescaler for timer 1
   movwf T1CON
 
-	movlw	d'99' ;256-99=157, 157*128 is 20096, about 20 milli seconds
-	movwf	TMR0
+	movlw d'99' ;256-99=157, 157*128 is 20096, about 20 milli seconds
+	movwf TMR0
 
-	movlw	0x00 ;make sure PORTB is off
-	movwf	PORTB
+	movlw 0x00 ;make sure PORTB is off
+	movwf PORTB
 
 	movlw b'00000001' ;make the robot go forwards
 	movwf ROBOT
