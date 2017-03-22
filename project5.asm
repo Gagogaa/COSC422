@@ -5,7 +5,7 @@
 ;Control the robot using timers and interrupts
 
 	LIST	p=16F628 ;tell assembler what chip we are using
-	include "/opt/microchip/mplabx/v3.55/mpasmx/p16f628.inc"		;include the defaults for the chip
+	include "/opt/microchip/mplabx/v3.55/mpasmx/p16f628.inc" ;include the defaults for the chip
 	__config 0x3D18 ;sets the configuration settings (oscillator type etc.)
 ;-------------------------------------------------------------------------------
 	cblock	0X20
@@ -109,9 +109,9 @@ setup
 	bsf PIE1,TMR1IE ;enable timer 1 interrupts
 
 	movlw 0x01
-	movwf TRISB ; Port B is output, B0 is input
+	movwf TRISB ;PORTB is output, B0 is input
 	movlw 0xff
-	movwf TRISA ; Port A is input
+	movwf TRISA ;PORTs input
 
 	bcf STATUS,RP0 ;switch back to bank 0
 
@@ -125,7 +125,7 @@ setup
 	bcf PIR1,TMR1IF ;clear timer 1 interrupt
 
 	movlw B'00110000' ;1-8 prescaler for timer 1
-  movwf T1CON
+	movwf T1CON
 
 	movlw d'99' ;256-99=157, 157*128 is 20096, about 20 milli seconds
 	movwf TMR0
@@ -139,9 +139,9 @@ setup
 more
 	goto more ;nothing to do
 ;-------------------------------------------------------------------------------
-;;; delays for (w * 3) + 4 operations
-;;; w is the current value stored in the w register when this sub is called
-;;; note that 0 is = 256
+;delays for (w * 3) + 4 operations
+;w is the current value stored in the w register when this sub is called
+;note that 0 is = 256
 delay_w_ops
 	movwf count
 delay_w_ops_loop
@@ -149,7 +149,7 @@ delay_w_ops_loop
 	goto delay_w_ops_loop
 	return
 ;-------------------------------------------------------------------------------
-;;; delays for 1 milli second
+;delays for 1 milli second
 delay_1_milli
 	movlw 0x00
 	call delay_w_ops
